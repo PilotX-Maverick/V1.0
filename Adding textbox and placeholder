@@ -1,0 +1,9 @@
+textbox1 = Entry(canvas4, width=5)  #creating an entry widget
+textbox1.place(x=200, y=330)
+textbox1.insert(0, "LL") #setting default value as LL
+
+def delete_text(event):
+    if textbox1.get()=="LL": #if text in text box is "LL"
+        textbox1.delete(0, tkinter.END) #delete the text
+
+textbox1.bind("<FocusIn>", delete_text) #checking if user clicks on the text box, delete_text function should trigger

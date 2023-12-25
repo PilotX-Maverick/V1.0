@@ -1,1 +1,22 @@
-Read Me
+Hello Dear Interns,
+
+Here is the first task for you, very simple and easy, not all tasks are going to be this way. This has been chosen as the first task to allow you to get familiar to the tkinter platform 
+and how does Safear Defense uses it to develop its code.
+
+A code snippet is given in the same 'main' branch. Open it, and start adjusting values and duplicating dropdowns and positioning them to the given locations. Not everyone needs to work on
+same screen. Therefore, each one of you have been assigned a certain screen. 
+
+Each screen is actually a PNG which denotes a specific Vehicle. There are currently 4 vehicles in our ecosystem, namely:
+1. Rover
+2. Quadcopter
+3. Satellite
+4. Rocket
+
+You can replace the screen PNG by downloading the PNG assigned to you in the Screens Folder of the main branch.
+
+Additionally, see folder "Required Positions" to see how many dropdowns are needed and exactly where. Alignment and keeping the UI organised is the first priority. All drop downs must have
+same width and they shouldnt be too short either.
+
+Good Luck!
+
+Queries? Contact - nesarasrinivasnesara@gmail.com

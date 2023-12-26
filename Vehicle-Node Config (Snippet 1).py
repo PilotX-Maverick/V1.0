@@ -11,7 +11,7 @@ from PIL import Image, ImageTk
 gui = Tk()
 gui.geometry('1250x1080')
 gui.config(bg="grey")
-gui.title('Planner X - Developer 1.0.1')
+gui.title('Planner X - Developer 1.0.1') #add title
 
 canvas4 = Canvas(gui, width=1535, height=1100, bg="Black", bd=0, highlightthickness=0) # Resize this and the LINE 19 equally, so as to fit the UI on your entire screen
 gui.state('zoomed')

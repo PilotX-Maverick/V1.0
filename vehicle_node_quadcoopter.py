@@ -26,23 +26,32 @@ img4 = ImageTk.PhotoImage(img4)
 chng2 = canvas4.create_image(0, 0, anchor=NW, image=img4)
 
 frame_options = ['Select', 'Option 1', 'Option 2', 'Option 3']
-# Positions for dropdowns according to the width and height of the image
 image_width = 1535
 image_height = 1100
-frame_positions = {
-    'top_left': (image_width * 0.12, image_height * 0.29),  # Adjust the multipliers to change the position
-    'top_right': (image_width * 0.34, image_height * 0.29),  # dynamically according to the image size
-    'bottom_left': (image_width * 0.12, image_height * 0.44),
-    'bottom_right': (image_width * 0.34, image_height * 0.44),
-}
 
-# Place dropdowns on specified positions
-dropdowns = {}
-for name, (x, y) in frame_positions.items():
-    var = StringVar(value=frame_options[0])
-    dropdowns[name] = ttk.OptionMenu(gui, var, *frame_options)
-    dropdowns[name].config(width=10)
-    canvas4.create_window(x, y, window=dropdowns[name])
+# Top left dropdown
+node_map1_val = StringVar(value=frame_options[0])
+node_map1 = ttk.OptionMenu(canvas4, node_map1_val, *frame_options)
+node_map1.config(width=8)
+node_map1.place(x=image_width * 0.10, y=image_height * 0.28)
+
+# Top right dropdown
+node_map2_val = StringVar(value=frame_options[0])
+node_map2 = ttk.OptionMenu(canvas4, node_map2_val, *frame_options)
+node_map2.config(width=8)
+node_map2.place(x=image_width * 0.30, y=image_height * 0.28)
+
+# Bottom left dropdown
+node_map3_val = StringVar(value=frame_options[0])
+node_map3 = ttk.OptionMenu(canvas4, node_map3_val, *frame_options)
+node_map3.config(width=8)
+node_map3.place(x=image_width * 0.10, y=image_height * 0.43)
+
+# Bottom right dropdown
+node_map4_val = StringVar(value=frame_options[0])
+node_map4 = ttk.OptionMenu(canvas4, node_map4_val, *frame_options)
+node_map4.config(width=8)
+node_map4.place(x=image_width * 0.30, y=image_height * 0.43)
 
 # Define options for the primary gimbal dropdowns
 gimbal_options = {
@@ -52,54 +61,113 @@ gimbal_options = {
     'shoulder_z': ['Shoulder Z', 'Option 1', 'Option 2']
 }
 
-# Define positions for the primary gimbal dropdowns
-gimbal_positions = {
-    'wrist': (image_width * 0.45, image_height * 0.27),
-    'elbow': (image_width * 0.56, image_height * 0.29),
-    'shoulder_x': (image_width * 0.60, image_height * 0.37),
-    'shoulder_z': (image_width * 0.48, image_height * 0.42)
-}
+# Wrist Gimbal Dropdown
+node_map5_val = StringVar(value=gimbal_options['wrist'][0])
+node_map5 = ttk.OptionMenu(canvas4, node_map5_val, *gimbal_options['wrist'])
+node_map5.config(width=8)
+node_map5.place(x=image_width * 0.43, y=image_height * 0.26)
 
-# Place primary gimbal dropdown menus
-for name, options in gimbal_options.items():
-    var = StringVar(value=options[0])
-    dropdown = ttk.OptionMenu(gui, var, *options)
-    dropdown.config(width=10)
-    x, y = gimbal_positions[name]
-    canvas4.create_window(x, y, window=dropdown)
+# Elbow Gimbal Dropdown
+node_map6_val = StringVar(value=gimbal_options['elbow'][0])
+node_map6 = ttk.OptionMenu(canvas4, node_map6_val, *gimbal_options['elbow'])
+node_map6.config(width=8)
+node_map6.place(x=image_width * 0.53, y=image_height * 0.29)
 
-# Define options for the secondary gimbal dropdowns
-secondary_options = ['LL', 'UL']
+# Shoulder X Gimbal Dropdown
+node_map7_val = StringVar(value=gimbal_options['shoulder_x'][0])
+node_map7 = ttk.OptionMenu(canvas4, node_map7_val, *gimbal_options['shoulder_x'])
+node_map7.config(width=8)
+node_map7.place(x=image_width * 0.57, y=image_height * 0.36)
+
+# Shoulder Z Gimbal Dropdown
+node_map8_val = StringVar(value=gimbal_options['shoulder_z'][0])
+node_map8 = ttk.OptionMenu(canvas4, node_map8_val, *gimbal_options['shoulder_z'])
+node_map8.config(width=8)
+node_map8.place(x=image_width * 0.46, y=image_height * 0.42)
 
 
 # Function to clear the default text when the entry gains focus
-def delete_text(event, entry, default_text):
-    if entry.get() == default_text:
-        entry.delete(0, tkinter.END)
+def delete_text(event):
+    if event.widget.get() == event.widget.default_text:
+        event.widget.delete(0, Tk.END)
+
+# Function to insert again default text
+def insert_default_text(event):
+    if event.widget.get().strip() == "":
+        event.widget.insert(0, event.widget.default_text)
 
 
-# Function to re-insert default text
-def insert_default_text(event, entry, default_text):
-    if entry.get().strip() == "":
-        entry.insert(0, default_text)
+# Wrist Position Text Boxes
+wrist_position_x = image_width * 0.43
+wrist_position_y = image_height * 0.27 + 20
 
+textbox1 = Entry(canvas4, width=5)
+textbox1.place(x=wrist_position_x, y=wrist_position_y)
+textbox1.insert(0, "LL")
+textbox1.default_text = "LL"
+textbox1.bind("<FocusIn>", delete_text)
+textbox1.bind("<FocusOut>", insert_default_text)
 
-# Place secondary gimbal text boxes directly under the primary ones
-for name, primary_position in gimbal_positions.items():
-    primary_x, primary_y = primary_position
-    secondary_y = primary_y + 20  # Y offset from the primary dropdown to place the secondary ones below
+textbox2 = Entry(canvas4, width=5)
+textbox2.place(x=wrist_position_x + 45, y=wrist_position_y)
+textbox2.insert(0, "UL")
+textbox2.default_text = "UL"
+textbox2.bind("<FocusIn>", delete_text)
+textbox2.bind("<FocusOut>", insert_default_text)
 
-    # Create two secondary text boxes for each primary
-    for i, default_text in enumerate(secondary_options):
-        textbox = Entry(canvas4, width=6)
-        secondary_x = primary_x + (i * 50) - 45  # Adjust the multiplier for spacing, and offset to center
-        textbox.place(x=secondary_x, y=secondary_y)
-        textbox.insert(0, default_text)
+# Wrist Position Text Boxes
+elbow_position_x = image_width * 0.53
+elbow_position_y = image_height * 0.30 + 20
 
-        # Bind the delete_text function to the focus-in event
-        textbox.bind("<FocusIn>", lambda event, e=textbox, d=default_text: delete_text(event, e, d))
+textbox3 = Entry(canvas4, width=5)
+textbox3.place(x=elbow_position_x, y=elbow_position_y)
+textbox3.insert(0, "LL")
+textbox3.default_text = "LL"
+textbox3.bind("<FocusIn>", delete_text)
+textbox3.bind("<FocusOut>", insert_default_text)
 
-        # Bind the insert_default_text function to the focus-out event
-        textbox.bind("<FocusOut>", lambda event, e=textbox, d=default_text: insert_default_text(event, e, d))
+textbox4 = Entry(canvas4, width=5)
+textbox4.place(x=elbow_position_x + 45, y=elbow_position_y)
+textbox4.insert(0, "UL")
+textbox4.default_text = "UL"
+textbox4.bind("<FocusIn>", delete_text)
+textbox4.bind("<FocusOut>", insert_default_text)
+
+# Shoulder X Position Text Boxes
+shoulder_x_position_x = image_width * 0.57
+shoulder_x_position_y = image_height * 0.37 + 20
+
+textbox5 = Entry(canvas4, width=5)
+textbox5.place(x=shoulder_x_position_x, y=shoulder_x_position_y)
+textbox5.insert(0, "LL")
+textbox5.default_text = "LL"
+textbox5.bind("<FocusIn>", delete_text)
+textbox5.bind("<FocusOut>", insert_default_text)
+
+textbox6 = Entry(canvas4, width=5)
+textbox6.place(x=shoulder_x_position_x + 45, y=shoulder_x_position_y)
+textbox6.insert(0, "UL")
+textbox6.default_text = "UL"
+textbox6.bind("<FocusIn>", delete_text)
+textbox6.bind("<FocusOut>", insert_default_text)
+
+# Shoulder Z Position Text Boxes
+shoulder_z_position_x = image_width * 0.46
+shoulder_z_position_y = image_height * 0.43 + 20
+
+textbox7 = Entry(canvas4, width=5)
+textbox7.place(x=shoulder_z_position_x, y=shoulder_z_position_y)
+textbox7.insert(0, "LL")
+textbox7.default_text = "LL"
+textbox7.bind("<FocusIn>", delete_text)
+textbox7.bind("<FocusOut>", insert_default_text)
+
+textbox8 = Entry(canvas4, width=5)
+textbox8.place(x=shoulder_z_position_x + 45, y=shoulder_z_position_y)
+textbox8.insert(0, "UL")
+textbox8.default_text = "UL"
+textbox8.bind("<FocusIn>", delete_text)
+textbox8.bind("<FocusOut>", insert_default_text)
+
 
 gui.mainloop()
